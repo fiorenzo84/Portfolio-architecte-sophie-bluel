@@ -1,3 +1,78 @@
+// import { fetchData } from "./fetchData.js";
+
+// //-------------------------------- AFFICHAGE DES TRAVAUX
+// const worksData = await fetchData();
+// const gallery = document.querySelector(".gallery");
+
+// function displayArchitectWorks(allWorks) {
+//   allWorks.forEach((workData) => {
+//     const figure = document.createElement("figure");
+//     const image = document.createElement("img");
+//     image.src = workData.imageUrl;
+//     image.alt = workData.title;
+//     const figcaption = document.createElement("figcaption");
+//     figcaption.textContent = workData.title;
+//     // on rattache l'image et la figcation dans la balise 'parent' figure
+//     figure.appendChild(image);
+//     figure.appendChild(figcaption);
+//     // on rattache les figures dans la gallerie
+//     gallery.appendChild(figure);
+//   });
+// }
+// displayArchitectWorks(worksData);
+
+// // CREATION ET AFFICHAGE DU CONTENAIR DES FILTRES
+// const portfolio = document.querySelector("#portfolio"); //parent
+// const secondChildOfPortfolio = portfolio.children[1];
+// const containerFilter = document.createElement("div");
+// containerFilter.classList.add("container-filter");
+// portfolio.insertBefore(containerFilter, secondChildOfPortfolio); //affichage du filtre dessous le titre
+
+// // BOUTON FILTRE TOUS
+// const allCategories = document.createElement("button");
+// allCategories.textContent = "Tous";
+// containerFilter.insertBefore(allCategories, containerFilter.firstChild);
+
+// // ECOUTEUR EVENEMENT CLICK BOUTON TOUS
+// allCategories.addEventListener("click", () => {
+//   gallery.innerHTML = "";
+//   displayArchitectWorks(worksData);
+// });
+
+// // SET CATEGORIE OBJET / APPARTEMENT / HOTEL ET RESTAURANT
+// // tableau de données unique de noms de catégories à partir de "worksData"
+// const categories = new Set(worksData.map((work) => work.category.name));
+
+// // BOUCLE DANS TABLEAU CATEGORIE POUR CREER LES BOUTONS
+// categories.forEach((category) => {
+//   const button = document.createElement("button");
+//   button.textContent = category;
+//   containerFilter.appendChild(button);
+//   // ECOUTEUR EVENEMENT DES BOUTONS CATEGORIE AU CLICK
+//   button.addEventListener("click", () => {
+//     gallery.innerHTML = "";
+//     const filteredData = worksData.filter(
+//       (work) => work.category.name === category
+//     );
+//     displayArchitectWorks(filteredData);
+//   });
+// });
+
+// // SELECTION DE L'ELEMENT POUR LA DECONNEXION
+// const deconnexionButton = document.querySelector("nav ul a li");
+
+// // ECOUTEUR D'EVENEMENT POUR DECONNEXION
+// deconnexionButton.addEventListener("click", () => {
+//   // ON SUPPRIME LES INFORMATIONS DE L'UTILISATEUR DU LOCALSTORAGE
+//   localStorage.removeItem("userId");
+//   localStorage.removeItem("token");
+
+//   // REDIRECTION VERS PAGE DE CONNEXION
+//   window.location.href = "http://localhost:5500/login.html";
+// });
+
+///////////////////////////////////////////////////////////////////////////////////////
+
 import { fetchData } from "./fetchData.js";
 
 //-------------------------------- AFFICHAGE DES TRAVAUX
@@ -21,39 +96,87 @@ function displayArchitectWorks(allWorks) {
 }
 displayArchitectWorks(worksData);
 
-// BOUTON FILTRE TOUS
-const allCategoryButton = document.querySelector(".allCategory");
-allCategoryButton.addEventListener("click", () => {
+//------------------------------------------ CREATION DE LA DIV EDITION
+const editionDiv = document.createElement("div");
+editionDiv.id = "edition";
+// Création du span
+const span = document.createElement("span");
+// Création de l'icône
+const icon = document.createElement("i");
+icon.classList.add("fa-regular", "fa-pen-to-square");
+span.textContent = "mode édition";
+// Ajout de l'icône dans le span
+span.appendChild(icon);
+// Ajout du span dans la div
+editionDiv.appendChild(span);
+// Création du bouton
+const button = document.createElement("button");
+button.textContent = "publier les changements";
+// Ajout du bouton dans la div
+editionDiv.appendChild(button);
+// Ajout de la div dans le body
+document.body.insertBefore(editionDiv, document.body.firstChild);
+
+//------------------------------------- CREATION SPAN (non fonctionnel sous photo)
+const spanModifier = document.createElement("span");
+spanModifier.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> modifier';
+// sélectionner la figure contenant l'image et le span existant
+const figure = document.querySelector("#introduction figure");
+// ajouter le span nouvellement créé sous l'image
+figure.appendChild(spanModifier);
+
+//---------------------------CREATION DU BOUTON MODIFIER POUR AJOUTER LES MEDIAS
+const buttonContainer = document.querySelector(".container-button-modified");
+const modifierButton =
+  '<button><span><i class="fa-regular fa-pen-to-square"></i>modifier</span></button>';
+buttonContainer.insertAdjacentHTML("beforeend", modifierButton);
+
+//---------------------------- CREATION ET AFFICHAGE DU CONTENAIR DES FILTRES
+const portfolio = document.querySelector("#portfolio"); //parent
+const secondChildOfPortfolio = portfolio.children[1];
+const containerFilter = document.createElement("div");
+containerFilter.classList.add("container-filter");
+portfolio.insertBefore(containerFilter, secondChildOfPortfolio); //affichage du filtre dessous le titre
+
+//------------------------------ BOUTON FILTRE TOUS
+const allCategories = document.createElement("button");
+allCategories.textContent = "Tous";
+containerFilter.insertBefore(allCategories, containerFilter.firstChild);
+
+//------------------------------ ECOUTEUR EVENEMENT CLICK BOUTON TOUS
+allCategories.addEventListener("click", () => {
   gallery.innerHTML = "";
-  console.log(worksData);
   displayArchitectWorks(worksData);
 });
 
-// BOUTON FILTRE OBJETS
-const objectsButton = document.querySelector(".objects");
-objectsButton.addEventListener("click", () => {
-  gallery.innerHTML = "";
-  const objectsData = worksData.filter((work) => work.category.id === 1);
-  console.log(objectsData);
-  displayArchitectWorks(objectsData);
+//-------------------------- SET CATEGORIE OBJET / APPARTEMENT / HOTEL ET RESTAURANT
+// tableau de données unique de noms de catégories à partir de "worksData"
+const categories = new Set(worksData.map((work) => work.category.name));
+
+//-------------------------- BOUCLE DANS TABLEAU CATEGORIE POUR CREER LES BOUTONS
+categories.forEach((category) => {
+  const button = document.createElement("button");
+  button.textContent = category;
+  containerFilter.appendChild(button);
+  // ECOUTEUR EVENEMENT DES BOUTONS CATEGORIE AU CLICK
+  button.addEventListener("click", () => {
+    gallery.innerHTML = "";
+    const filteredData = worksData.filter(
+      (work) => work.category.name === category
+    );
+    displayArchitectWorks(filteredData);
+  });
 });
 
-// BOUTON FILTRE APPARTEMENTS
-const apartmentButton = document.querySelector(".apartment");
-apartmentButton.addEventListener("click", () => {
-  gallery.innerHTML = "";
-  const apartmentData = worksData.filter((work) => work.category.id === 2);
-  console.log(apartmentData);
-  displayArchitectWorks(apartmentData);
-});
+//------------------- SELECTION DE L'ELEMENT POUR LA DECONNEXION
+const deconnexionButton = document.querySelector("nav ul a li");
 
-// BOUTON FILTRE HOTELS ET RESTAURANTS
-const hotelAndRestaurantButton = document.querySelector(".hotelAndRestaurant");
-hotelAndRestaurantButton.addEventListener("click", () => {
-  gallery.innerHTML = "";
-  const hotelAndRestaurantData = worksData.filter(
-    (work) => work.category.id === 3
-  );
-  console.log(hotelAndRestaurantData);
-  displayArchitectWorks(hotelAndRestaurantData);
+//--------------------- ECOUTEUR D'EVENEMENT POUR DECONNEXION
+deconnexionButton.addEventListener("click", () => {
+  // ON SUPPRIME LES INFORMATIONS DE L'UTILISATEUR DU LOCALSTORAGE
+  localStorage.removeItem("userId");
+  localStorage.removeItem("token");
+
+  // REDIRECTION VERS PAGE DE CONNEXION
+  window.location.href = "http://localhost:5500/login.html";
 });

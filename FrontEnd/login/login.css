@@ -129,3 +129,12 @@ footer {
   bottom: 0;
   right: 7%;
 }
+/* BALISE ERREUR */
+small {
+  display: none;
+  text-align: center;
+  padding: 25px;
+  color: red;
+  font-weight: bold;
+  font-size: 13px;
+}

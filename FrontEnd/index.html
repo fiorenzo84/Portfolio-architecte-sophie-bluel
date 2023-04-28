@@ -9,10 +9,14 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/52f5358f63.js"
+      crossorigin="anonymous"></script>
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
+    <!-- création dynamique du bandeau noir edition quand l'utilisateur est connecté -->
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
@@ -30,6 +34,7 @@
           <img
             src="./assets/images/sophie-bluel.png"
             alt="photo de sophie bluel" />
+          <!-- création dynamique du modifier sous la photo (non fonctionnel) -->
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -51,13 +56,11 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
-        <div class="container-filter">
-          <button class="allCategory">Tous</button>
-          <button class="objects">Objets</button>
-          <button class="apartment">Appartements</button>
-          <button class="hotelAndRestaurant">Hôtels & restaurants</button>
+        <div class="container-button-modified">
+          <h2>Mes Projets</h2>
+          <!-- création dynamique du bouton modifier à coter de "Mes projets" -->
         </div>
+        <!-- création dynamique du contenair et des filtres de tri  -->
         <div class="gallery"></div>
       </section>
       <section id="contact">
@@ -83,5 +86,6 @@
     </footer>
     <script type="module" src="./js/fetchData.js"></script>
     <script type="module" src="./js/displayData.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

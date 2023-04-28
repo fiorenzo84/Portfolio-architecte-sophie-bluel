@@ -135,6 +135,32 @@ body {
   font-size: 14px;
   background: #fffef8;
 }
+/* bandeau noir edition */
+#edition {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 59px;
+}
+#edition span {
+  color: #fff;
+  margin: 0px 20px;
+}
+#edition button {
+  height: 38px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background: #fff;
+  font-family: "Work Sans";
+}
+/***************************/
 header {
   display: flex;
   justify-content: space-between;
@@ -194,9 +220,15 @@ nav li img {
 #introduction figure {
   flex: 1;
 }
+
+#introduction figure span {
+  display: none;
+  margin: 15px 57px;
+}
+
 #introduction img {
   display: block;
-  margin: auto;
+  margin: 15px auto;
   width: 80%;
 }
 
@@ -213,7 +245,24 @@ nav li img {
 
 #portfolio h2 {
   text-align: center;
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
+}
+
+#portfolio .container-button-modified {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3em;
+}
+
+.container-button-modified button {
+  display: none;
+  background: #fffef8;
+  border: none;
+  margin-left: 20px;
+  height: 20px;
+  padding: 7px;
+  cursor: pointer;
 }
 
 /*********** style des boutons filtre ************/
