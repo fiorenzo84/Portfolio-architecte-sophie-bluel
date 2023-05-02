@@ -135,7 +135,130 @@ body {
   font-size: 14px;
   background: #fffef8;
 }
-/* bandeau noir edition */
+/** la modale avec les travaux **/
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 731px;
+  width: 630px;
+  border-radius: 10px;
+  background: #fff;
+  text-align: center;
+}
+
+.modal-title {
+  margin-top: 50px;
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  text-align: center;
+  color: black;
+}
+
+.close-modal {
+  position: absolute;
+  font-size: 24px;
+  width: 24px;
+  left: 93%;
+  top: 20px;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.modal-gallery {
+  padding: 30px 65px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.modal-gallery-image {
+  width: 78px;
+  margin: 10px;
+}
+
+.image-container {
+  position: relative;
+  width: 100px;
+}
+
+.image-container p {
+  margin: 0px 40px 10px 0px;
+}
+
+.greyLine-gallery {
+  border-top: solid;
+  border-width: 1px;
+  margin: 15px 75px;
+  color: #b3b3b3;
+}
+
+.modal-button {
+  width: 237px;
+  height: 36px;
+  background: #1d6154;
+  border-radius: 60px;
+  font-family: Syne;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin: 23px 130px;
+}
+
+.remove-gallery-modal-button {
+  color: #d65353;
+  font-family: Syne;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.container-icones {
+  display: flex;
+  position: absolute;
+  top: 16px;
+  left: 45px;
+  width: 40%;
+  justify-content: space-around;
+}
+.container-icone-move {
+  display: block;
+  opacity: 0;
+  color: #fff;
+  background: black;
+  font-size: 11px;
+  padding: 3px;
+  border-radius: 3px;
+}
+.container-icone-delete {
+  color: #fff;
+  background: black;
+  font-size: 11px;
+  padding: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/** bandeau noir edition **/
 #edition {
   display: none;
   justify-content: center;
@@ -196,7 +319,7 @@ nav ul {
   align-items: center;
   list-style-type: none;
 }
-/* lien page login*/
+/** lien page login **/
 nav ul a {
   text-decoration: none;
   color: black;
@@ -209,6 +332,11 @@ nav li {
 li:hover {
   color: #b1663c;
 }
+
+li a:hover {
+  color: #b1663c;
+}
+
 nav li img {
   width: 20px;
 }
@@ -245,7 +373,6 @@ nav li img {
 
 #portfolio h2 {
   text-align: center;
-  /* margin-bottom: 1em; */
 }
 
 #portfolio .container-button-modified {
@@ -265,7 +392,7 @@ nav li img {
   cursor: pointer;
 }
 
-/*********** style des boutons filtre ************/
+/** style des boutons du filtre **/
 .container-filter {
   display: flex;
   justify-content: center;
@@ -292,8 +419,8 @@ nav li img {
   color: #fff;
   background-color: #1d6154;
 }
-
 /******************************************/
+
 .gallery {
   width: 100%;
   display: grid;

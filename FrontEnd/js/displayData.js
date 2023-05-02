@@ -1,78 +1,3 @@
-// import { fetchData } from "./fetchData.js";
-
-// //-------------------------------- AFFICHAGE DES TRAVAUX
-// const worksData = await fetchData();
-// const gallery = document.querySelector(".gallery");
-
-// function displayArchitectWorks(allWorks) {
-//   allWorks.forEach((workData) => {
-//     const figure = document.createElement("figure");
-//     const image = document.createElement("img");
-//     image.src = workData.imageUrl;
-//     image.alt = workData.title;
-//     const figcaption = document.createElement("figcaption");
-//     figcaption.textContent = workData.title;
-//     // on rattache l'image et la figcation dans la balise 'parent' figure
-//     figure.appendChild(image);
-//     figure.appendChild(figcaption);
-//     // on rattache les figures dans la gallerie
-//     gallery.appendChild(figure);
-//   });
-// }
-// displayArchitectWorks(worksData);
-
-// // CREATION ET AFFICHAGE DU CONTENAIR DES FILTRES
-// const portfolio = document.querySelector("#portfolio"); //parent
-// const secondChildOfPortfolio = portfolio.children[1];
-// const containerFilter = document.createElement("div");
-// containerFilter.classList.add("container-filter");
-// portfolio.insertBefore(containerFilter, secondChildOfPortfolio); //affichage du filtre dessous le titre
-
-// // BOUTON FILTRE TOUS
-// const allCategories = document.createElement("button");
-// allCategories.textContent = "Tous";
-// containerFilter.insertBefore(allCategories, containerFilter.firstChild);
-
-// // ECOUTEUR EVENEMENT CLICK BOUTON TOUS
-// allCategories.addEventListener("click", () => {
-//   gallery.innerHTML = "";
-//   displayArchitectWorks(worksData);
-// });
-
-// // SET CATEGORIE OBJET / APPARTEMENT / HOTEL ET RESTAURANT
-// // tableau de données unique de noms de catégories à partir de "worksData"
-// const categories = new Set(worksData.map((work) => work.category.name));
-
-// // BOUCLE DANS TABLEAU CATEGORIE POUR CREER LES BOUTONS
-// categories.forEach((category) => {
-//   const button = document.createElement("button");
-//   button.textContent = category;
-//   containerFilter.appendChild(button);
-//   // ECOUTEUR EVENEMENT DES BOUTONS CATEGORIE AU CLICK
-//   button.addEventListener("click", () => {
-//     gallery.innerHTML = "";
-//     const filteredData = worksData.filter(
-//       (work) => work.category.name === category
-//     );
-//     displayArchitectWorks(filteredData);
-//   });
-// });
-
-// // SELECTION DE L'ELEMENT POUR LA DECONNEXION
-// const deconnexionButton = document.querySelector("nav ul a li");
-
-// // ECOUTEUR D'EVENEMENT POUR DECONNEXION
-// deconnexionButton.addEventListener("click", () => {
-//   // ON SUPPRIME LES INFORMATIONS DE L'UTILISATEUR DU LOCALSTORAGE
-//   localStorage.removeItem("userId");
-//   localStorage.removeItem("token");
-
-//   // REDIRECTION VERS PAGE DE CONNEXION
-//   window.location.href = "http://localhost:5500/login.html";
-// });
-
-///////////////////////////////////////////////////////////////////////////////////////
-
 import { fetchData } from "./fetchData.js";
 
 //-------------------------------- AFFICHAGE DES TRAVAUX
@@ -169,7 +94,7 @@ categories.forEach((category) => {
 });
 
 //------------------- SELECTION DE L'ELEMENT POUR LA DECONNEXION
-const deconnexionButton = document.querySelector("nav ul a li");
+const deconnexionButton = document.querySelector("nav ul li a ");
 
 //--------------------- ECOUTEUR D'EVENEMENT POUR DECONNEXION
 deconnexionButton.addEventListener("click", () => {
