@@ -1,4 +1,4 @@
-//---------------- RECUPERATION DES TRAVAUX
+//---------------- RECUPERATION DES TRAVAUX ----------------//
 const API_ALLWORKS = "http://localhost:5678/api/works";
 
 export async function fetchData() {
