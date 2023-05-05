@@ -52,7 +52,7 @@ connexionButton.addEventListener("click", async (e) => {
   }
 });
 
-//--------------------------- FONCTION AFFICHAGE DE LA MODALE------------------//
+//--------------------------- MODALE DES TRAVAUX ------------------//
 function displayModal(works) {
   const modalContainer = document.createElement("div");
   const modal = document.createElement("div");
@@ -109,8 +109,34 @@ function displayModal(works) {
     imageContainer.appendChild(edit);
     modalGallery.appendChild(imageContainer);
 
-    containerIconeDelete.addEventListener("click", () => {
+    //-------------------------- FETCH  DELETE (au clic sur corbeille)----------------------//
+    containerIconeDelete.addEventListener("click", async (event) => {
+      // on récupère le token dans le local storage
+      const token = localStorage.getItem("token");
       console.log("fetch delete du travail par id :", work.id);
+      const workId = work.id; // on récupére l'identifiant à supprimer
+      const response = await fetch(
+        `http://localhost:5678/api/works/${workId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("travaux supprimée:", response);
+
+        // Actualiser la galerie
+        const response = await fetch(API_ALLWORKS);
+        const works = await response.json();
+        modalGallery.innerHTML = "";
+      } else {
+        // Erreur de suppression
+        console.log("Erreur lors de la suppression de l'œuvre.");
+      }
+      event.stopPropagation();
     });
   }
 
@@ -132,5 +158,108 @@ function displayModal(works) {
     if (e.target === modalContainer) {
       modalContainer.remove();
     }
+  });
+
+  //--------------------------- MODALE POUR AJOUT IMAGE ------------------//
+  addPictureButton.addEventListener("click", () => {
+    // cache la modale des travaux
+    modalContainer.remove();
+    modal.remove();
+    console.log("créer modale photo");
+    //creer la modale photo avec ses éléments
+    const modalContainerPicture = document.createElement("div");
+    const modalPicture = document.createElement("div");
+    const closeModalPicture = document.createElement("span");
+    const leftArrowBack = document.createElement("span");
+    const modalTitlePicture = document.createElement("h1");
+    const form = document.createElement("form");
+    const labelInputText = document.createElement("label");
+    const containerAddPictureInput = document.createElement("div");
+    const inputText = document.createElement("input");
+    const labelSelect = document.createElement("label");
+    const select = document.createElement("select");
+    const option1 = document.createElement("option");
+    const option2 = document.createElement("option");
+    const option3 = document.createElement("option");
+    const greyLine = document.createElement("div");
+    const button = document.createElement("button");
+
+    addPictureButton.className = "modal-button";
+    modalContainerPicture.className = "modal-container";
+    modalPicture.className = "modal-picture";
+    closeModalPicture.className = "close-modal";
+    leftArrowBack.innerHTML = '<i class="fa-solid fa-arrow-left-long"></i>';
+    modalTitlePicture.className = "modal-title";
+    form.className = "modal-form";
+    containerAddPictureInput.innerHTML =
+      '<i class="fa-sharp fa-regular fa-image" style="color:#b9c5cc; font-size: 65px;"></i>' +
+      '<div class="custom-file-upload">' +
+      '<label for="photo" class="add-picture-button">' +
+      '<input type="file" id="photo" name="photo" style="display:none;">' +
+      " + Ajouter photo" +
+      "</label>" +
+      "<p>jpg, png : 4mo max</p>" +
+      "</div>";
+
+    containerAddPictureInput.className = "container-addImg-input";
+    leftArrowBack.className = "back-arrow";
+    greyLine.className = "greyLine-img";
+    labelInputText.textContent = "Titre:";
+    labelSelect.textContent = "Catégorie:";
+    option1.value = "1";
+    // option1.text = "Objets";
+    option2.value = "2";
+    // option2.text = "Appartements";
+    option3.value = "3";
+    // option3.text = "Hotels & restaurants";
+    button.type = "submit";
+    button.textContent = "Valider";
+
+    closeModalPicture.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    modalTitlePicture.textContent = "Ajout photo";
+
+    inputText.type = "text";
+    inputText.id = "image-url";
+
+    select.id = "image-category";
+    select.appendChild(option1);
+    select.appendChild(option2);
+    select.appendChild(option3);
+
+    form.appendChild(containerAddPictureInput);
+    form.appendChild(labelInputText);
+    form.appendChild(inputText);
+    form.appendChild(labelSelect);
+    form.appendChild(select);
+    form.appendChild(greyLine);
+    form.appendChild(button);
+    modalPicture.appendChild(closeModalPicture);
+    modalPicture.appendChild(leftArrowBack);
+    modalPicture.appendChild(modalTitlePicture);
+    modalPicture.appendChild(form);
+    // modalPicture.appendChild(greyLine);
+    modalContainerPicture.appendChild(modalPicture);
+    document.body.insertBefore(modalContainerPicture, document.body.firstChild);
+
+    // fermeture de la modale image sur la croix
+    closeModalPicture.addEventListener("click", () => {
+      modalContainerPicture.remove();
+    });
+    // ou fermeture de la modale image en cliquant en dehors de la modale
+    modalContainerPicture.addEventListener("click", (e) => {
+      if (e.target === modalContainerPicture) {
+        modalContainerPicture.remove();
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const imageUrl = inputText.value;
+      const imageCategory = select.value;
+      console.log(imageUrl, imageCategory);
+      // appel de l'API pour ajouter l'image
+      // ...
+      modalContainerPicture.remove();
+    });
   });
 }
