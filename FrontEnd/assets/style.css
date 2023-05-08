@@ -281,10 +281,14 @@ body {
   color: rgb(0, 0, 0);
 }
 
+.back-arrow:hover {
+  cursor: pointer;
+}
+
 .modal-form {
   display: flex;
   flex-direction: column;
-  padding: 36px 105px;
+  padding: 25px 105px;
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -302,6 +306,11 @@ body {
   font-family: "Work Sans";
   border: none;
   margin: 0px 90px;
+}
+
+.modal-form button:hover {
+  background: #1d6154;
+  cursor: pointer;
 }
 
 .container-addImg-input {
@@ -353,6 +362,18 @@ body {
 
 .container-add-picture-input {
   background: blue;
+}
+
+.container-addImg-input img {
+  height: 169px;
+}
+
+.works-error-message {
+  display: none;
+  color: red;
+  font-weight: bold;
+  width: 100%;
+  margin: 20px 0px;
 }
 
 /** bandeau noir edition **/

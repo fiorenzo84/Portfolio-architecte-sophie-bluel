@@ -165,7 +165,6 @@ function displayModal(works) {
     // cache la modale des travaux
     modalContainer.remove();
     modal.remove();
-    console.log("créer modale photo");
     //creer la modale photo avec ses éléments
     const modalContainerPicture = document.createElement("div");
     const modalPicture = document.createElement("div");
@@ -183,6 +182,7 @@ function displayModal(works) {
     const option3 = document.createElement("option");
     const greyLine = document.createElement("div");
     const button = document.createElement("button");
+    const worksErrorMessage = document.createElement("small");
 
     addPictureButton.className = "modal-button";
     modalContainerPicture.className = "modal-container";
@@ -207,21 +207,21 @@ function displayModal(works) {
     labelInputText.textContent = "Titre:";
     labelSelect.textContent = "Catégorie:";
     option1.value = "1";
-    // option1.text = "Objets";
+    option1.text = "Objets";
     option2.value = "2";
-    // option2.text = "Appartements";
+    option2.text = "Appartements";
     option3.value = "3";
-    // option3.text = "Hotels & restaurants";
+    option3.text = "Hotels & restaurants";
     button.type = "submit";
     button.textContent = "Valider";
-
     closeModalPicture.innerHTML = '<i class="fa-solid fa-xmark"></i>';
     modalTitlePicture.textContent = "Ajout photo";
-
     inputText.type = "text";
     inputText.id = "image-url";
-
     select.id = "image-category";
+    worksErrorMessage.className = "works-error-message";
+    worksErrorMessage.textContent = "Veuillez remplir le formulaire";
+
     select.appendChild(option1);
     select.appendChild(option2);
     select.appendChild(option3);
@@ -233,6 +233,7 @@ function displayModal(works) {
     form.appendChild(select);
     form.appendChild(greyLine);
     form.appendChild(button);
+    form.appendChild(worksErrorMessage);
     modalPicture.appendChild(closeModalPicture);
     modalPicture.appendChild(leftArrowBack);
     modalPicture.appendChild(modalTitlePicture);
@@ -240,6 +241,71 @@ function displayModal(works) {
     // modalPicture.appendChild(greyLine);
     modalContainerPicture.appendChild(modalPicture);
     document.body.insertBefore(modalContainerPicture, document.body.firstChild);
+
+    // récupérer l'input "file" pour aller chercher des photos
+    const inputPhoto = document.getElementById("photo");
+    // ajouter un événement "change" à l'input "file"
+    inputPhoto.addEventListener("change", () => {
+      // récupérer le fichier image sélectionné
+      const imageFile = inputPhoto.files[0];
+
+      // créer un élément d'image et lui attribuer l'URL de l'image sélectionnée
+      const imageElement = document.createElement("img");
+      imageElement.src = URL.createObjectURL(imageFile);
+
+      //récupère le contenair de l'input file
+      const containerFileUpload = document.querySelector(".custom-file-upload");
+
+      // ajouter l'image à la page a la place du contenair input file
+      containerAddPictureInput.removeChild(containerAddPictureInput.firstChild);
+      containerAddPictureInput.appendChild(imageElement);
+      containerFileUpload.style.display = "none";
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = inputText.value;
+      const category = select.value;
+      const fileInput = document.querySelector("#photo");
+      const file = fileInput.files[0];
+      console.log(file, title, category);
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("image", file);
+
+      const token = localStorage.getItem("token");
+      if (file && title && category) {
+        // FETCH POUR ENVOYER TRAVAUX //
+        const response = await fetch(API_ALLWORKS, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          body: formData,
+        });
+
+        if (response.ok) {
+          form.reset();
+          console.log(response.status);
+        } else {
+          worksErrorMessage.style.display = "block";
+        }
+        console.log(response.status);
+        modalContainerPicture.remove();
+      } else {
+        worksErrorMessage.style.display = "block";
+      }
+    });
+
+    // flèche retour sur modale des travaux
+    leftArrowBack.addEventListener("click", () => {
+      modalPicture.remove();
+      modalContainer.appendChild(modal);
+      document.body.insertBefore(modalContainer, document.body.firstChild);
+      modalContainerPicture.remove();
+    });
 
     // fermeture de la modale image sur la croix
     closeModalPicture.addEventListener("click", () => {
@@ -250,16 +316,6 @@ function displayModal(works) {
       if (e.target === modalContainerPicture) {
         modalContainerPicture.remove();
       }
-    });
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const imageUrl = inputText.value;
-      const imageCategory = select.value;
-      console.log(imageUrl, imageCategory);
-      // appel de l'API pour ajouter l'image
-      // ...
-      modalContainerPicture.remove();
     });
   });
 }
