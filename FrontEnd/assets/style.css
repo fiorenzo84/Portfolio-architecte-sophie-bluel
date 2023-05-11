@@ -183,7 +183,6 @@ body {
   padding: 30px 65px 0px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .modal-gallery-image {

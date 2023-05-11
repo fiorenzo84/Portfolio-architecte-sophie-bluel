@@ -103,6 +103,14 @@ deconnexionButton.addEventListener("click", () => {
   window.location.href = "http://localhost:5500/login.html";
 });
 
+//--------------- VERIFIE SI L'UTILISATEUR EST CONNECTEE ------------------------//
+const userId = localStorage.getItem("userId");
+const token = localStorage.getItem("token");
+// Si l'utilisateur est connecté on modifie l'affichage de la page
+if (userId && token) {
+  displayConnectedLayout();
+}
+
 //------------------- AFFICHAGE DE LA PAGE CONNECTEE ------------------------//
 function displayConnectedLayout() {
   document.querySelector("#edition").style.display = "flex";
@@ -112,20 +120,14 @@ function displayConnectedLayout() {
     ".container-button-modified button"
   );
   modifyButton.style.display = "flex";
+
+  // bouton pour ouvrir la modale des travaux
   modifyButton.addEventListener("click", async () => {
     // on importe les données et création de la modale galerie photo
     const response = await fetch(API_ALLWORKS);
     const works = await response.json();
-    displayModal(works);
+    displayModal(works); // on affiche les travaux (fichier modal.js)
   });
   document.querySelector("header nav ul li a").textContent = "logout";
   document.querySelector("header").style.margin = "100px 0px";
-}
-
-//------------------- VERIFIE SI L'UTILISATEUR EST CONNECTEE ------------------------//
-const userId = localStorage.getItem("userId");
-const token = localStorage.getItem("token");
-// Si l'utilisateur est connecté alors on modifie l'affichage de la page
-if (userId && token) {
-  displayConnectedLayout();
 }
