@@ -36,7 +36,6 @@ connexionButton.addEventListener("click", async (e) => {
       // Connexion réussie
       console.log(response.status);
       const jsonData = await response.json();
-      localStorage.setItem("userId", jsonData.userId);
       localStorage.setItem("token", jsonData.token);
       // Redirection vers la page d'accueil
       window.location.href =

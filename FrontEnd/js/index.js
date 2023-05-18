@@ -21,41 +21,6 @@ function displayArchitectWorks(allWorks) {
 }
 displayArchitectWorks(worksData);
 
-//------------------ CREATION DE LA DIV EDITION -----------------------//
-const editionDiv = document.createElement("div");
-editionDiv.id = "edition";
-// Création du span
-const span = document.createElement("span");
-// Création de l'icône
-const icon = document.createElement("i");
-icon.classList.add("fa-regular", "fa-pen-to-square");
-span.textContent = "mode édition";
-// Ajout de l'icône dans le span
-span.appendChild(icon);
-// Ajout du span dans la div
-editionDiv.appendChild(span);
-// Création du bouton
-const button = document.createElement("button");
-button.textContent = "publier les changements";
-// Ajout du bouton dans la div
-editionDiv.appendChild(button);
-// Ajout de la div dans le body
-document.body.insertBefore(editionDiv, document.body.firstChild);
-
-//---------------- CREATION SPAN (non fonctionnel sous photo) -------------------//
-const spanModifier = document.createElement("span");
-spanModifier.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> modifier';
-// sélectionner la figure contenant l'image et le span existant
-const figure = document.querySelector("#introduction figure");
-// ajouter le span nouvellement créé sous l'image
-figure.appendChild(spanModifier);
-
-//--------------- CREATION DU BOUTON MODIFIER POUR AJOUTER LES MEDIAS ----------------//
-const buttonContainer = document.querySelector(".container-button-modified");
-const modifierButton =
-  '<button><span><i class="fa-regular fa-pen-to-square"></i>modifier</span></button>';
-buttonContainer.insertAdjacentHTML("beforeend", modifierButton);
-
 //------------- CREATION ET AFFICHAGE DU CONTENAIR DES FILTRES --------------//
 const portfolio = document.querySelector("#portfolio"); //parent
 const secondChildOfPortfolio = portfolio.children[1];
@@ -92,22 +57,55 @@ categories.forEach((category) => {
   });
 });
 
+//------------------ CREATION DE LA DIV EDITION -----------------------//
+const editionDiv = document.createElement("div");
+editionDiv.id = "edition";
+// Création du span
+const span = document.createElement("span");
+// Création de l'icône
+const icon = document.createElement("i");
+icon.classList.add("fa-regular", "fa-pen-to-square");
+span.textContent = "mode édition";
+// Ajout de l'icône dans le span
+span.appendChild(icon);
+// Ajout du span dans la div
+editionDiv.appendChild(span);
+// Création du bouton
+const button = document.createElement("button");
+button.textContent = "publier les changements";
+// Ajout du bouton dans la div
+editionDiv.appendChild(button);
+// Ajout de la div dans le body
+document.body.insertBefore(editionDiv, document.body.firstChild);
+
+//---------------- CREATION SPAN (non fonctionnel sous photo) -------------------//
+const spanModifier = document.createElement("span");
+spanModifier.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> modifier';
+// sélectionner la figure contenant l'image et le span existant
+const figure = document.querySelector("#introduction figure");
+// ajouter le span nouvellement créé sous l'image
+figure.appendChild(spanModifier);
+
+//--------------- CREATION DU BOUTON MODIFIER POUR AJOUTER LES MEDIAS ----------------//
+const buttonContainer = document.querySelector(".container-button-modified");
+const modifierButton =
+  '<button><span><i class="fa-regular fa-pen-to-square"></i>modifier</span></button>';
+buttonContainer.insertAdjacentHTML("beforeend", modifierButton);
+
 //-------------- SELECTION DE L'ELEMENT POUR LA DECONNEXION -------------------//
 const deconnexionButton = document.querySelector("nav ul li a ");
 
 deconnexionButton.addEventListener("click", () => {
-  // on supprime les infromations de l'utilisateur du localstorage
-  localStorage.removeItem("userId");
+  // on supprime le token du localStorage
   localStorage.removeItem("token");
   // et on redirige vers la page de connexion (login)
   window.location.href = "http://localhost:5500/login.html";
 });
 
 //--------------- VERIFIE SI L'UTILISATEUR EST CONNECTEE ------------------------//
-const userId = localStorage.getItem("userId");
 const token = localStorage.getItem("token");
 // Si l'utilisateur est connecté on modifie l'affichage de la page
-if (userId && token) {
+if (token) {
   displayConnectedLayout();
 }
 
@@ -122,11 +120,8 @@ function displayConnectedLayout() {
   modifyButton.style.display = "flex";
 
   // bouton pour ouvrir la modale des travaux
-  modifyButton.addEventListener("click", async () => {
-    // on importe les données et création de la modale galerie photo
-    const response = await fetch(API_ALLWORKS);
-    const works = await response.json();
-    displayModal(works); // on affiche les travaux (fichier modal.js)
+  modifyButton.addEventListener("click", () => {
+    displayModal(worksData); // on affiche les travaux (fichier modal.js)
   });
   document.querySelector("header nav ul li a").textContent = "logout";
   document.querySelector("header").style.margin = "100px 0px";

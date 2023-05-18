@@ -33,7 +33,8 @@ function displayModal(works) {
 
   // Remplir la modale avec la fonction qui crée les vignettes des travaux
   for (const work of works) {
-    modalGallery.appendChild(createImageContainer(work));
+    createImageContainer(work);
+    //modalGallery.appendChild(createImageContainer(work));
   }
   // fermeture de la modale sur la croix
   closeModal.addEventListener("click", () => {
@@ -42,7 +43,7 @@ function displayModal(works) {
   // ou fermeture de la modale en cliquant en dehors de la modale
   modalContainer.addEventListener("click", (e) => {
     if (e.target === modalContainer) {
-      // modalContainer.remove();
+      modalContainer.remove();
     }
   });
 
@@ -80,10 +81,41 @@ function displayModal(works) {
     });
 
     //-------------------------- FETCH  DELETE (au clic sur corbeille)----------------------//
-    containerIconeDelete.addEventListener("click", async (e) => {
+    containerIconeDelete.addEventListener("click", (e) => {
+      deleteWork(work);
+      // // on récupère le token dans le local storage
+      // const token = localStorage.getItem("token");
+      // console.log("fetch delete id travail :", work.id);
+      // const workId = work.id; // on récupére l'identifiant à supprimer
+
+      // try {
+      //   const response = await fetch(
+      //     `http://localhost:5678/api/works/${workId}`,
+      //     {
+      //       method: "DELETE",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //         Authorization: "Bearer " + token,
+      //       },
+      //     }
+      //   );
+
+      //   if (response.ok) {
+      //     // prend en compte les status de 200 à 300
+      //     console.log("travaux supprimée code :", response.status);
+      //     imageContainer.remove();
+      //   } else {
+      //     console.log(response.status);
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    });
+
+    async function deleteWork(work) {
       // on récupère le token dans le local storage
       const token = localStorage.getItem("token");
-      console.log("fetch delete du travail par id :", work.id);
+      console.log("fetch delete id travail :", work.id);
       const workId = work.id; // on récupére l'identifiant à supprimer
 
       try {
@@ -98,29 +130,24 @@ function displayModal(works) {
           }
         );
 
-        if (response.status === 200) {
-          console.log("travaux supprimée:", response.status);
-          const responseAllWorks = await fetch(API_ALLWORKS);
-          const works = await responseAllWorks.json();
-          const modalGallery = document.querySelector(".modal-gallery");
-          // Actualiser la galerie
-          modalGallery.innerHTML = "";
-          for (const work of works) {
-            modalGallery.appendChild(createImageContainer(work));
-          }
+        if (response.ok) {
+          // prend en compte les status de 200 à 300
+          console.log("travaux supprimée code :", response.status);
+          imageContainer.remove();
         } else {
-          // affiche aussi le status 204 (No Content)
           console.log(response.status);
         }
       } catch (error) {
         console.log(error);
       }
-    });
-    return imageContainer;
+    }
+
+    //return imageContainer;
+    modalGallery.appendChild(imageContainer);
   }
 
   //--------------------------- MODALE POUR AJOUT IMAGE ------------------//
-  // écoute au click de "Ajouter une photo"
+  //écoute au click de "Ajouter une photo"
   addPictureButton.addEventListener("click", () => {
     // cache la modale des travaux
     modalContainer.remove();
@@ -244,7 +271,8 @@ function displayModal(works) {
 
         if (response.status === 201) {
           form.reset();
-          console.log(response.status);
+          // gérer vignette page accueil
+          console.log("Travaux ajoutée code :", response.status);
         } else {
           worksErrorMessage.style.display = "block";
         }
