@@ -1,7 +1,8 @@
 //---------------- PAGE DE CONNEXION
-const docSwagger = "http://localhost:5678/api-docs/";
+const docSwagger = "http://localhost:5678/api-docs/"; // (simplement pour ouvrir rapidement pour travailler)
 const API_USERS_LOGIN = "http://localhost:5678/api/users/login";
 const API_ALLWORKS = "http://localhost:5678/api/works";
+
 //-------------------------- FETCH HTTP USERS LOGIN  ----------------------//
 async function connexionData(email, password) {
   const data = {
@@ -34,14 +35,15 @@ connexionButton.addEventListener("click", async (e) => {
 
     if (response.status === 200) {
       // Connexion réussie
-      console.log(response.status);
+      console.log("connexion reussie code :", response.status);
       const jsonData = await response.json();
+      // si l'utilisateur est bien connectée on récupère et on stocke le token
       localStorage.setItem("token", jsonData.token);
-      // Redirection vers la page d'accueil
+      // et on redirige vers la page d'accueil
       window.location.href =
-        "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
+        "/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
     } else {
-      console.log(response.status);
+      console.log("échec connexion code :", response.status);
       errorMessage.style.display = "block";
     }
   } else {

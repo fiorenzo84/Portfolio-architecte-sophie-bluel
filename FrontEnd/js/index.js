@@ -96,6 +96,7 @@ buttonContainer.insertAdjacentHTML("beforeend", modifierButton);
 const deconnexionButton = document.querySelector("nav ul li a ");
 
 deconnexionButton.addEventListener("click", () => {
+  console.log("déconnexion utilisateur");
   // on supprime le token du localStorage
   localStorage.removeItem("token");
   // et on redirige vers la page de connexion (login)
@@ -123,6 +124,8 @@ function displayConnectedLayout() {
   modifyButton.addEventListener("click", () => {
     displayModal(worksData); // on affiche les travaux (fichier modal.js)
   });
+  // change le texte du bouton login
   document.querySelector("header nav ul li a").textContent = "logout";
+  // rajoute de la marge au header
   document.querySelector("header").style.margin = "100px 0px";
 }
