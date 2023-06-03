@@ -96,11 +96,10 @@ buttonContainer.insertAdjacentHTML("beforeend", modifierButton);
 const deconnexionButton = document.querySelector("nav ul li a ");
 
 deconnexionButton.addEventListener("click", () => {
-  console.log("déconnexion utilisateur");
   // on supprime le token du localStorage
   localStorage.removeItem("token");
   // et on redirige vers la page de connexion (login)
-  window.location.href = "http://localhost:5500/login.html";
+  window.location.href = "../login/login.html";
 });
 
 //--------------- VERIFIE SI L'UTILISATEUR EST CONNECTEE ------------------------//

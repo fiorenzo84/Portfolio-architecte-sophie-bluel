@@ -40,8 +40,7 @@ connexionButton.addEventListener("click", async (e) => {
       // si l'utilisateur est bien connectée on récupère et on stocke le token
       localStorage.setItem("token", jsonData.token);
       // et on redirige vers la page d'accueil
-      window.location.href =
-        "/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";
+      window.location.href = "../index.html";
     } else {
       console.log("échec connexion code :", response.status);
       errorMessage.style.display = "block";
